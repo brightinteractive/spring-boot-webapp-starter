@@ -1,0 +1,11 @@
+/build/
+/.apt_generated/
+/.gradle/
+/.settings/
+/bin/
+/.springBeans
+/.project
+*.classpath
+*.editorconfig
+*.eslintrc
+*.factorypath
