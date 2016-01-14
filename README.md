@@ -53,8 +53,17 @@ To run the tests:
 
     ./gradlew test
 
-To run the application from a JAR:
+To build the application:
 
-    grunt build && ./gradlew build && java -jar build/libs/appstarter-*.jar
+	./gradlew build 	
+	
+To run the application from the JAR:
+
+    java -jar build/libs/appstarter-*.jar
     open http://localhost:8080/
+	
+To run the application within Gradle with automatic reloading of front end assets:
+
+    grunt build:dev && ./gradlew bootRun
+    open http://localhost:8080/	
 
