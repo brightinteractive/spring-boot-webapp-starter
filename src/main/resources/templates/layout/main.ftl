@@ -3,25 +3,27 @@
 <#macro body_class></#macro>
 
 <#macro header_links>
+    
+    <ul class="list-inline pull-right">
+        <li>${currentUser.username} </li>
+        <li><a href="/user/change-password?userId=${currentUser.id}">Change password</a></li>
+        <#if currentUser.UIPermissions.canViewUsersMenu>
+            <li><a href="/admin/users">Manage users</a></li>
+        </#if>
+        <li>
+            <form action="/logout" method="post"><@brightSpring.csrf/><input type="submit" id="signoutButton" class="btn btn-default" value="Sign out"></form>
+        </li>
+    </ul>
 
-    <span class="dropdown dropdown--inline">
-        <a href="#" class="button button--subtle" data-dropdown="js-user-dropdown">${currentUser.username} <span class="caret-down"></span></a>
-        <ul class="dropdown__list dropdown__list--subtle js-user-dropdown">
-            <li><a href="/user/change-password?userId=${currentUser.id}">Change password</a></li>
-            <#if currentUser.UIPermissions.canViewUsersMenu>
-           		<li><a href="/admin/users">Manage users</a></li>
-           	</#if>
-        </ul>
-    </span>
 
-    <form action="/logout" method="post"><@brightSpring.csrf/><input type="submit" id="signoutButton" class="button button--subtle" value="Sign out"></form>
+    
 </#macro>
 
 <#macro header>
     <div class="header">
         <div class="container">
-            <a href="/"><img src="/static/img/logo.png" alt="Logo"></a>
-            <div class="header__links">
+            <a href="/" class="pull-left"><img src="/static/img/logo.png" alt="Logo"></a>
+            <div class="header__links pull-right">
                 <@header_links/>
             </div>
         </div>
@@ -53,7 +55,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title><@title/></title>
-
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/appstarter.css">
 </head>
 
 <body class="<@body_class/>">

@@ -83,21 +83,17 @@ ${spring.status.value?is_date_like?then(spring.status.value?date, spring.status.
  * @param attributes any additional attributes for the element (such as class
  *        or CSS styles or size
 -->
-<#macro formCheckboxes path options attributes="" inline=false>
+<#macro formCheckboxes path options attributes="">
 	<@spring.bind path/>
-    <#if inline=true>
-    <div class="field field--checkbox-inline">
-    <#else>
-    <div class="field field--checkbox">
-    </#if>
 	<#list options?keys as value>
 		<#assign isSelected = spring.contains(spring.status.actualValue?default([""]), value)>
-		<label>
-			<input type="checkbox" name="${spring.status.expression}" value="${value}"<#if isSelected>checked="checked"</#if> ${attributes}<@spring.closeTag/>
-			${options[value]}
-		</label>
+        <div class="checkbox">
+    		<label>
+    			<input type="checkbox" name="${spring.status.expression}" value="${value}"<#if isSelected>checked="checked"</#if> ${attributes}<@spring.closeTag/>
+    			${options[value]}
+    		</label>
+        </div>
 	</#list>
-    </div>
 </#macro>
 
 <#--

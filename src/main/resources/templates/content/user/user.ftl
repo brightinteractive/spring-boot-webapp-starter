@@ -12,57 +12,59 @@
 </#macro>
 
 <#macro content>
-    <form action="" method="POST">
-        <@brightSpring.csrf/>
-
+    
+    <div class="page-header">
         <#if form.id??>
             <h1>Edit user</h1>
             <@spring.formHiddenInput 'form.id'/>
         <#else>
             <h1>Add user</h1>
         </#if>
+    </div>
+    <form action="" method="POST" class="form-horizontal">
+        <@brightSpring.csrf/>
 
-        <div class="field__row field__row--condensed">
-            <div class="field field--short">
-                <label>
-                    <span class="field__title">Email address:</span>
-                    <@spring.formInput 'form.emailAddress'/>
-                    <@brightSpring.showErrors/>
-                </label>
+        
+
+        <div class="form-group">        
+            <label class="col-sm-2 control-label">Email address:</label>
+            <div class="col-sm-10">
+                <@spring.formInput path='form.emailAddress' attributes='class=form-control'/>
+                <@brightSpring.showErrors/>
             </div>
         </div>
 
-        <div class="field__row field__row--condensed field__row--columns">
-            <div class="field">
-                <label>
-                    <span class="field__title">Password<#if form.id??> (leave empty if no change)</#if>:</span>
-                    <@spring.formPasswordInput 'form.password'/>
-                    <@brightSpring.showErrors/>
-                </label>
-            </div>
-
-            <div class="field">
-                <label>
-                    <span class="field__title">Repeat password:</span>
-                    <@spring.formPasswordInput 'form.passwordRepeated'/>
-                    <@brightSpring.showErrors/>
-                </label>
-            </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Password:</label>
+            <div class="col-sm-10">
+                <@spring.formPasswordInput path='form.password' attributes='class=form-control'/>
+                <@brightSpring.showErrors/>
+                <#if form.id??><p class="help-block">Leave empty if no change</p></#if>
+            </div>    
         </div>
 
-        <div class="field__row field__row--condensed">
-            <div class="field field--checkbox field--short">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Repeat password:</label>
+            <div class="col-sm-10">
+                <@spring.formPasswordInput path='form.passwordRepeated' attributes='class=form-control'/>
+                <@brightSpring.showErrors/>
+            </div>
+        </div>
+    
 
-                <span class="field__title">Roles:</span>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Roles:</label>
+            <div class="col-sm-10">
                 <@brightSpring.formCheckboxes path='form.roles' options=roleOptions />
                 <@brightSpring.showErrors/>
-
             </div>
         </div>
-
-        <input type="submit" value="Save" class="button"/>
-        <a href="<@spring.url '/admin/users'/>" class="button button--cancel">Cancel</a>
-
+        
+        <div class="form-group">
+        <div class="col-sm-10 col-sm-offset-2">
+            <input type="submit" value="Save" class="btn btn-primary"/>
+            <a href="<@spring.url '/admin/users'/>" class="btn btn-default">Cancel</a>
+        </div>
     </form>
 </#macro>
 

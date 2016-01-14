@@ -7,42 +7,48 @@
 <#macro sidebar><#include "/include/admin-menu.ftl"></#macro>
 
 <#macro content>
-    <div class="content content--main">
-        <form action="" method="POST">
-            <@brightSpring.csrf/>
 
+    <form action="" method="POST" class="form-horizontal">
+        <@brightSpring.csrf/>
+        
+        <div class="page-header">
             <h1>Change password</h1>
-            <@spring.formHiddenInput 'form.userId'/>
+        </div>    
+        <@spring.formHiddenInput 'form.userId'/>
 
-            <div class="field__row field__row--condensed">
-                <div class="field field--checkbox field--short">
-    	            <span class="field__title">Current password:</span>
-    	            <@spring.formPasswordInput 'form.currentPassword'/>
-    	            <@brightSpring.showErrors/>
-                </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Current password:</label>
+            <div class="col-sm-10">
+                <@spring.formPasswordInput path='form.currentPassword' attributes='class=form-control'/>
+          
+                <@brightSpring.showErrors/>
             </div>
+        </div>
 
-            <div class="field__row field__row--condensed">
-                <div class="field field--checkbox field--short">
-    	            <span class="field__title">New password:</span>
-    	            <@spring.formPasswordInput 'form.newPassword'/>
-    	            <@brightSpring.showErrors/>
-                </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">New password:</label>
+            <div class="col-sm-10">
+                <@spring.formPasswordInput path='form.newPassword' attributes='class=form-control'/>
+                <@brightSpring.showErrors/>
             </div>
+        </div>
 
-            <div class="field__row field__row--condensed">
-                <div class="field field--checkbox field--short">
-    	            <span class="field__title">Repeat new password:</span>
-    	            <@spring.formPasswordInput 'form.passwordRepeated'/>
-    	            <@brightSpring.showErrors/>
-                </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Repeat new password:</label>
+            <div class="col-sm-10">
+                <@spring.formPasswordInput path='form.passwordRepeated' attributes='class=form-control'/>
+                <@brightSpring.showErrors/>
             </div>
+        </div>
+        
+        <div class="form-group">
+            <div class="col-sm-10 col-sm-offset-2">
+                <input type="submit" value="Save" class="btn btn-primary"/>
+                <a href="<@spring.url '/'/>" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </form>
 
-            <input type="submit" value="Save" class="button"/>
-            <a href="<@spring.url '/'/>" class="button button--cancel">Cancel</a>
-
-        </form>
-    </div>
 </#macro>
 
 <@render_page/>

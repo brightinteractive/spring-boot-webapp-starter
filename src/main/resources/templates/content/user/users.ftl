@@ -7,11 +7,14 @@
 
 <#macro content>
 
-<a href="/admin/user" class="button u-pull-right">Add user <i aria-hidden="true" class="icon-add-circle"></i></a>
+<div class="page-header">
+    <a href="/admin/user" class="btn btn-primary pull-right">Add user</a>
 
-<h1>Users</h1>
+    <h1>Users</h1>
 
-<table class="table">
+</div>
+
+<table class="table table-striped">
     <thead>
     	<tr>
         	<th>Username</th>
