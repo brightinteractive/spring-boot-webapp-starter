@@ -64,6 +64,6 @@ To run the application from the JAR:
 	
 To run the application within Gradle with automatic reloading of front end assets:
 
-    grunt build:dev && ./gradlew bootRun
+    ./gradlew bootRun
     open http://localhost:8080/	
 
