@@ -55,6 +55,6 @@ To run the tests:
 
 To run the application from a JAR:
 
-    grunt build && ./gradlew build && java -jar build/libs/appstarter-*.jar
+    ./gradlew build && java -jar build/libs/appstarter-*.jar
     open http://localhost:8080/
 
