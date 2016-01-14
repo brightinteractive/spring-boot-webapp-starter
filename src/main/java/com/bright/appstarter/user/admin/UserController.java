@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.admin;
 
 import static com.bright.appstarter.user.RoleCheckboxConstants.*;
 import static com.bright.appstarter.user.UserUrlConstants.*;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.bright.appstarter.user.User;
+import com.bright.appstarter.user.UserService;
 import com.bright.appstarter.user.UserService.UserAlreadyExistsException;
 
 @RequestMapping(USER_URL)

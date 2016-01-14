@@ -21,6 +21,8 @@ import org.junit.runner.RunWith;
 import com.bright.appstarter.test.AppStarterIntegrationTest;
 import com.bright.appstarter.test.TestData;
 import com.bright.appstarter.testsecurity.AuthenticationSetter;
+import com.bright.appstarter.user.admin.UserController;
+import com.bright.appstarter.user.admin.UserForm;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @AppStarterIntegrationTest

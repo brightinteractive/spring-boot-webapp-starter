@@ -18,6 +18,8 @@ import org.junit.runner.RunWith;
 
 import com.bright.appstarter.test.AppStarterIntegrationTest;
 import com.bright.appstarter.testsecurity.AuthenticationSetter;
+import com.bright.appstarter.user.changepassword.ChangePasswordController;
+import com.bright.appstarter.user.changepassword.ChangePasswordForm;
 import com.bright.appstarter.userlogin.CurrentUser;
 
 @RunWith(SpringJUnit4ClassRunner.class)

@@ -5,9 +5,9 @@ import static org.mockito.Mockito.*;
 
 import org.springframework.validation.*;
 
-import com.bright.appstarter.user.ChangePasswordForm;
-import com.bright.appstarter.user.ChangePasswordFormValidator;
 import com.bright.appstarter.user.UserService;
+import com.bright.appstarter.user.changepassword.ChangePasswordForm;
+import com.bright.appstarter.user.changepassword.ChangePasswordFormValidator;
 
 import org.junit.*;
 import org.junit.runner.*;

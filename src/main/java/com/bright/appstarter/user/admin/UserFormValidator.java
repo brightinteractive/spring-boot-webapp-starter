@@ -1,10 +1,13 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.admin;
 
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
+import com.bright.appstarter.user.User;
+import com.bright.appstarter.user.UserService;
 
 import org.apache.commons.lang3.StringUtils;
 

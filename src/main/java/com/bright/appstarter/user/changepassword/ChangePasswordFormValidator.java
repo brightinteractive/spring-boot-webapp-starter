@@ -1,9 +1,11 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.changepassword;
 
 import javax.inject.*;
 
 import org.springframework.stereotype.*;
 import org.springframework.validation.*;
+
+import com.bright.appstarter.user.UserService;
 
 import org.apache.commons.lang3.*;
 

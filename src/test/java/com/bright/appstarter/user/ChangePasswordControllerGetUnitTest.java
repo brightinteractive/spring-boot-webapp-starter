@@ -11,6 +11,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.ui.ModelMap;
 
+import com.bright.appstarter.user.changepassword.ChangePasswordController;
+import com.bright.appstarter.user.changepassword.ChangePasswordForm;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

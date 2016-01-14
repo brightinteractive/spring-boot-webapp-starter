@@ -1,9 +1,12 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.admin;
 
 import java.util.Collection;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+
+import com.bright.appstarter.user.Role;
+import com.bright.appstarter.user.User;
 
 public class UserForm
 {

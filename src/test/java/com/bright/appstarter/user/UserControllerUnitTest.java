@@ -16,6 +16,9 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.ui.ModelMap;
 
+import com.bright.appstarter.user.admin.UserController;
+import com.bright.appstarter.user.admin.UserForm;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

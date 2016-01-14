@@ -1,7 +1,6 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.changepassword;
 
 import static com.bright.appstarter.user.UserUrlConstants.*;
-
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import javax.inject.Inject;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import com.bright.appstarter.user.UserService;
 
 @RequestMapping(CHANGE_PASSWORD_URL)
 @Controller

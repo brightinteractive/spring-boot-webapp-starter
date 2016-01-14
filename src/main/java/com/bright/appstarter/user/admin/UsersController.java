@@ -1,7 +1,6 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.admin;
 
 import static com.bright.appstarter.user.UserUrlConstants.*;
-
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import javax.inject.Inject;
@@ -9,6 +8,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.bright.appstarter.user.UserService;
 
 @RequestMapping(USERS_URL)
 @Controller
