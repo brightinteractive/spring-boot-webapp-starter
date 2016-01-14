@@ -55,15 +55,11 @@ To run the tests:
 
 To build the application:
 
-<<<<<<< HEAD
 	./gradlew build 	
 	
 To run the application from the JAR:
 
     java -jar build/libs/appstarter-*.jar
-=======
-    ./gradlew build && java -jar build/libs/appstarter-*.jar
->>>>>>> origin/master
     open http://localhost:8080/
 	
 To run the application within Gradle with automatic reloading of front end assets:
