@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.changepassword;
 
 import static com.bright.appstarter.user.UserUITestConstants.*;
 

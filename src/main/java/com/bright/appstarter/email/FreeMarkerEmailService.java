@@ -1,7 +1,5 @@
 package com.bright.appstarter.email;
 
-import java.util.Map;
-
 import javax.inject.Inject;
 
 import org.springframework.mail.MailSender;
@@ -32,10 +30,11 @@ public class FreeMarkerEmailService implements EmailService
 	}
 
 	@Override
-	public void send(String to, String from, String templateName, Map<String, Object> emailModel)
+	public void send(String to, String from, String templateName, EmailVariables variables)
 	{
-		String body = render(EmailService.BODY_TEMPLATE_PATH + templateName, emailModel.get("body"));
-		String subject = render(EmailService.SUBJECT_TEMPLATE_PATH + templateName, emailModel.get("subject"));
+		String body = render(EmailService.BODY_TEMPLATE_PATH + templateName, variables.getBodyMap());
+		String subject = render(EmailService.SUBJECT_TEMPLATE_PATH + templateName,
+			variables.getSubjectMap());
 		SimpleMailMessage simpleMessage = compose(to, from, body, subject);
 		mailSender.send(simpleMessage);
 	}
@@ -56,9 +55,9 @@ public class FreeMarkerEmailService implements EmailService
 	}
 
 	@Override
-	public void send(String to, String templateName, Map<String, Object> emailModel)
+	public void send(String to, String templateName, EmailVariables variables)
 	{
-		send(to, emailConfiguration.getFromAddress(), templateName, emailModel);
+		send(to, emailConfiguration.getFromAddress(), templateName, variables);
 	}
 
 }

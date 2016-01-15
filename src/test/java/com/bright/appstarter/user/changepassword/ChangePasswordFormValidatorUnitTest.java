@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.changepassword;
 
 import static org.mockito.Matchers.*;
 import static org.mockito.Mockito.*;

@@ -9,4 +9,6 @@ public interface UserRepository extends JpaRepository<User, Long>
 	Optional<User> findOneByEmailAddress(String email);
 
 	long countByEmailAddress(String emailAddress);
+
+	User findOneByActivationToken(String registerToken);
 }

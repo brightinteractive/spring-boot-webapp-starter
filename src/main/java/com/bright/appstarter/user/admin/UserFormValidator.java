@@ -3,16 +3,14 @@ package com.bright.appstarter.user.admin;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 import com.bright.appstarter.user.User;
+import com.bright.appstarter.user.UserBaseForm;
+import com.bright.appstarter.user.UserBaseFormValidator;
 import com.bright.appstarter.user.UserService;
 
-import org.apache.commons.lang3.StringUtils;
-
 @Component
-public class UserFormValidator implements Validator
+public class UserFormValidator extends UserBaseFormValidator
 {
 	@Inject
 	private UserService userService;
@@ -24,63 +22,22 @@ public class UserFormValidator implements Validator
 	}
 
 	@Override
-	public void validate(Object target, Errors errors)
+	protected boolean isExistingUser(UserBaseForm form)
 	{
-		UserForm form = (UserForm) target;
-		validatePasswords(errors, form);
-		validateEmailAddress(errors, form);
+		UserForm userForm = (UserForm) form;
+		return userForm.getId() != null;
 	}
 
-	private void validatePasswords(Errors errors, UserForm form)
+	@Override
+	protected boolean newEmailAddressToCheck(UserBaseForm form)
 	{
-		if (passwordFieldsAreEmpty(form))
+		UserForm userForm = (UserForm) form;
+
+		if (isExistingUser(userForm))
 		{
-			if (isExistingUser(form))
-			{
-				// Existing user - empty means leave password the same.
-				return;
-			}
+			User user = userService.getUser(userForm.getId());
 
-			errors.rejectValue("password", "NotEmpty");
-		}
-
-		if (!form.getPassword().equals(form.getPasswordRepeated()))
-		{
-			errors.rejectValue("passwordRepeated", "passwords.do.not.match");
-		}
-	}
-
-	private void validateEmailAddress(Errors errors, UserForm form)
-	{
-		if (!newEmailAddressToCheck(form))
-		{
-			return;
-		}
-
-		if (userService.emailAddressInUse(form.getEmailAddress()))
-		{
-			errors.rejectValue("emailAddress", "email.address.in.use");
-		}
-	}
-
-	private boolean isExistingUser(UserForm form)
-	{
-		return form.getId() != null;
-	}
-
-	private boolean passwordFieldsAreEmpty(UserForm form)
-	{
-		return StringUtils.isEmpty(form.getPassword())
-			&& StringUtils.isEmpty(form.getPasswordRepeated());
-	}
-
-	private boolean newEmailAddressToCheck(UserForm form)
-	{
-		if (isExistingUser(form))
-		{
-			User user = userService.getUser(form.getId());
-
-			if (user.getEmailAddress().equalsIgnoreCase(form.getEmailAddress()))
+			if (user.getEmailAddress().equalsIgnoreCase(userForm.getEmailAddress()))
 			{
 				return false;
 			}

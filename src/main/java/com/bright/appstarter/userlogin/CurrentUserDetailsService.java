@@ -32,6 +32,12 @@ public class CurrentUserDetailsService implements UserDetailsService
 			.orElseThrow(
 				() -> new UsernameNotFoundException("There is no user with username " + username));
 
+		if (user.getActivationToken() == null
+			|| !user.getActivationToken().equals(User.ACTIVATION_TOKEN_APPROVED))
+		{
+			throw new UsernameNotFoundException(username + " has not been activated yet");
+		}
+
 		UIPermissions uiPermissions = new UIPermissionsImpl(userPermissionsService);
 
 		return new CurrentUser(user, uiPermissions);

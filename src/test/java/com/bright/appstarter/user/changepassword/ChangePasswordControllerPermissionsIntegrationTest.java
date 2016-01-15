@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.changepassword;
 
 import static org.mockito.Mockito.*;
 
@@ -18,6 +18,8 @@ import org.junit.runner.RunWith;
 
 import com.bright.appstarter.test.AppStarterIntegrationTest;
 import com.bright.appstarter.testsecurity.AuthenticationSetter;
+import com.bright.appstarter.user.User;
+import com.bright.appstarter.user.UserService;
 import com.bright.appstarter.user.changepassword.ChangePasswordController;
 import com.bright.appstarter.user.changepassword.ChangePasswordForm;
 import com.bright.appstarter.userlogin.CurrentUser;

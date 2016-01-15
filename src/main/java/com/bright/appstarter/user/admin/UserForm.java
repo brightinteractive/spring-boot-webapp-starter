@@ -2,22 +2,13 @@ package com.bright.appstarter.user.admin;
 
 import java.util.Collection;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import com.bright.appstarter.user.Role;
 import com.bright.appstarter.user.User;
+import com.bright.appstarter.user.UserBaseForm;
 
-public class UserForm
+public class UserForm extends UserBaseForm
 {
 	private Long id;
-
-	@NotEmpty
-	@Email
-	private String emailAddress;
-
-	private String password;
-	private String passwordRepeated;
 	private Collection<Role> roles;
 
 	public UserForm(Long id)
@@ -29,8 +20,7 @@ public class UserForm
 		String password,
 		Collection<Role> roles)
 	{
-		this.emailAddress = emailAddress;
-		this.password = password;
+		super(emailAddress, password);
 		this.roles = roles;
 	}
 
@@ -39,10 +29,18 @@ public class UserForm
 		String password,
 		Collection<Role> roles)
 	{
+		super(emailAddress, password);
 		this.id = id;
-		this.emailAddress = emailAddress;
-		this.password = password;
 		this.roles = roles;
+	}
+
+	public UserForm(Long id,
+		String emailAddress,
+		String password,
+		String passwordRepeated)
+	{
+		super(emailAddress, password, passwordRepeated);
+		this.id = id;
 	}
 
 	public UserForm()
@@ -59,36 +57,6 @@ public class UserForm
 		this.id = id;
 	}
 
-	public String getEmailAddress()
-	{
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress)
-	{
-		this.emailAddress = emailAddress;
-	}
-
-	public String getPassword()
-	{
-		return password;
-	}
-
-	public void setPassword(String password)
-	{
-		this.password = password;
-	}
-
-	public String getPasswordRepeated()
-	{
-		return passwordRepeated;
-	}
-
-	public void setPasswordRepeated(String passwordRepeat)
-	{
-		this.passwordRepeated = passwordRepeat;
-	}
-
 	public Collection<Role> getRoles()
 	{
 		return roles;
@@ -99,10 +67,11 @@ public class UserForm
 		this.roles = roles;
 	}
 
+	@Override
 	public void populateFromUser(User user)
 	{
+		super.populateFromUser(user);
 		this.id = user.getId();
-		this.emailAddress = user.getEmailAddress();
 		this.roles = user.getRoles();
 	}
 }

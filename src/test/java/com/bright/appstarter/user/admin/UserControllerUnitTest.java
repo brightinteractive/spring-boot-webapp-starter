@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.admin;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -16,15 +16,17 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.ui.ModelMap;
 
-import com.bright.appstarter.user.admin.UserController;
-import com.bright.appstarter.user.admin.UserForm;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.bright.appstarter.user.Role;
+import com.bright.appstarter.user.User;
+import com.bright.appstarter.user.UserService;
+import com.bright.appstarter.user.UserUITestConstants;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerUnitTest
@@ -120,7 +122,8 @@ public class UserControllerUnitTest
 			roles);
 
 		when(userService.createUser(emailAddress, password, roles)).thenAnswer(
-			invocation -> {
+			invocation ->
+			{
 				Object[] args = invocation.getArguments();
 				return new User(1L,
 					(String) args[0],
@@ -151,14 +154,17 @@ public class UserControllerUnitTest
 			optionalPassword.get(),
 			roles);
 
-		when(userService.updateUser(userId, emailAddress, roles, optionalPassword)).thenAnswer(
-			invocation -> {
-				Object[] args = invocation.getArguments();
-				return new User((Long) args[0],
-					(String) args[1],
-					((Optional<String>) args[3]).get(),
-					(Collection<Role>) args[2]);
-			});
+		when(
+			userService.updateUser(userId, emailAddress, roles, optionalPassword, Optional.empty()))
+			.thenAnswer(
+				invocation ->
+				{
+					Object[] args = invocation.getArguments();
+					return new User((Long) args[0],
+						(String) args[1],
+						((Optional<String>) args[3]).get(),
+						(Collection<Role>) args[2]);
+				});
 
 		User savedUser = controller.saveForm(userForm);
 

@@ -37,19 +37,20 @@ public class FreeMarkerEmailServiceUnitTest
 		String subject = "A subject for Martin";
 		String body = "Hi Martin, here is your email";
 		String templateName = "template";
-		Map<String, String> bodyMap = ImmutableMap.<String, String> builder().put("name", "Martin")
+		Map<String, Object> bodyMap = ImmutableMap.<String, Object> builder().put("name", "Martin")
 			.build();
 		when(freeMarkerRenderer.render(EmailService.BODY_TEMPLATE_PATH + templateName, bodyMap))
 			.thenReturn(body);
-		Map<String, String> subjectMap = ImmutableMap.<String, String> builder()
+		Map<String, Object> subjectMap = ImmutableMap.<String, Object> builder()
 			.put("name", "Martin").build();
 		when(
 			freeMarkerRenderer
 				.render(EmailService.SUBJECT_TEMPLATE_PATH + templateName, subjectMap)).thenReturn(
 			subject);
 
-		freeMarkerEmailService.send(to, from, templateName, ImmutableMap.<String, Object> builder()
-			.put("body", bodyMap).put("subject", subjectMap).build());
+		EmailVariables variables = new ImmutableEmailVariablesImpl(subjectMap, bodyMap);
+
+		freeMarkerEmailService.send(to, from, templateName, variables);
 
 		SimpleMailMessage simpleMessage = new SimpleMailMessage();
 		simpleMessage.setTo(to);
@@ -68,7 +69,7 @@ public class FreeMarkerEmailServiceUnitTest
 		String subject = "A subject";
 		String body = "Hi Martin, here is your email";
 		String templateName = "template";
-		Map<String, String> bodyMap = ImmutableMap.<String, String> builder().put("name", "Martin")
+		Map<String, Object> bodyMap = ImmutableMap.<String, Object> builder().put("name", "Martin")
 			.build();
 		when(freeMarkerRenderer.render(EmailService.BODY_TEMPLATE_PATH + templateName, bodyMap))
 			.thenReturn(body);
@@ -78,9 +79,8 @@ public class FreeMarkerEmailServiceUnitTest
 				.render(EmailService.SUBJECT_TEMPLATE_PATH + templateName, subjectMap)).thenReturn(
 			subject);
 
-		freeMarkerEmailService.send(to, templateName,
-			ImmutableMap.<String, Object> builder().put("body", bodyMap).put("subject", subjectMap)
-				.build());
+		EmailVariables variables = new ImmutableEmailVariablesImpl(subjectMap, bodyMap);
+		freeMarkerEmailService.send(to, templateName, variables);
 
 		SimpleMailMessage simpleMessage = new SimpleMailMessage();
 		simpleMessage.setTo(to);

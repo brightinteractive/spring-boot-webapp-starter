@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.admin;
 
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -19,6 +19,9 @@ import org.junit.runner.RunWith;
 import com.bright.appstarter.test.AppStarterIntegrationTest;
 import com.bright.appstarter.testsecurity.AuthenticationSetter;
 import com.bright.appstarter.testsecurity.SecurityMockMvcWrapper;
+import com.bright.appstarter.user.User;
+import com.bright.appstarter.user.UserService;
+import com.bright.appstarter.user.UserUITestConstants;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @AppStarterIntegrationTest

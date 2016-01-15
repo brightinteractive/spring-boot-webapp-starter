@@ -32,14 +32,10 @@ public class UserService
 		String password,
 		Collection<Role> roles) throws UserAlreadyExistsException
 	{
-		if (emailAddressInUse(emailAddress))
-		{
-			throw new UserAlreadyExistsException();
-		}
-		User user = new User(emailAddress,
-			passwordEncoder.encode(password),
+		return createUser(emailAddress,
+			password,
+			User.ACTIVATION_TOKEN_APPROVED,
 			roles);
-		return userRepository.save(user);
 	}
 
 	@PreAuthorize("@userPermissionsService.canAddOrEditUsers(principal)")
@@ -50,10 +46,22 @@ public class UserService
 	}
 
 	@PreAuthorize("@userPermissionsService.canAddOrEditUsers(principal)")
+	public User createUser(String emailAddress,
+		String password,
+		String registerToken) throws UserAlreadyExistsException
+	{
+		return createUser(emailAddress,
+			password,
+			registerToken,
+			Collections.emptyList());
+	}
+
+	@PreAuthorize("@userPermissionsService.canAddOrEditUsers(principal)")
 	public User updateUser(long id,
 		String emailAddress,
 		Collection<Role> roles,
-		Optional<String> newPassword)
+		Optional<String> newPassword,
+		Optional<String> registerToken)
 	{
 		User existingUser = getUser(id);
 		existingUser.setEmailAddress(emailAddress);
@@ -64,10 +72,15 @@ public class UserService
 			existingUser.setPasswordHash(passwordEncoder.encode(newPassword.get()));
 		}
 
+		if (registerToken.isPresent())
+		{
+			existingUser.setActivationToken(registerToken.get());
+		}
+
 		return existingUser;
 	}
 
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("true")
 	public boolean emailAddressInUse(String emailAddress)
 	{
 		return userRepository.countByEmailAddress(emailAddress) > 0;
@@ -94,7 +107,8 @@ public class UserService
 		updateUser(user.getId().longValue(),
 			user.getEmailAddress(),
 			user.getRoles(),
-			Optional.of(newPassword));
+			Optional.of(newPassword),
+			Optional.empty());
 	}
 
 	@PreAuthorize("@userPermissionsService.canChangePassword(principal, #userId)")
@@ -114,6 +128,22 @@ public class UserService
 	public void deleteUser(long userId)
 	{
 		userRepository.delete(userId);
+	}
+
+	private User createUser(String emailAddress,
+		String password,
+		String registerToken,
+		Collection<Role> roles) throws UserAlreadyExistsException
+	{
+		if (emailAddressInUse(emailAddress))
+		{
+			throw new UserAlreadyExistsException();
+		}
+		User user = new User(emailAddress,
+			passwordEncoder.encode(password),
+			registerToken,
+			roles);
+		return userRepository.save(user);
 	}
 
 	public static class UserAlreadyExistsException extends Exception

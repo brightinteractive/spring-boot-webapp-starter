@@ -108,7 +108,7 @@ public class UserController
 			}
 
 			return userService.updateUser(form.getId(), form.getEmailAddress(), form.getRoles(),
-				optionalChangedPassword);
+				optionalChangedPassword, Optional.empty());
 		}
 	}
 

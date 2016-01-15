@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.changepassword;
 
 import com.bright.appstarter.test.TestData;
 import com.bright.appstarter.user.Role;

@@ -1,4 +1,4 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.admin;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 
 import com.bright.appstarter.user.User;
 import com.bright.appstarter.user.UserService;
+import com.bright.appstarter.user.UserUITestConstants;
 import com.bright.appstarter.user.admin.UsersController;
 
 import org.junit.Before;

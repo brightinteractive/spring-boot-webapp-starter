@@ -3,6 +3,7 @@ package com.bright.appstarter.userlogin;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -30,7 +31,8 @@ public class CurrentUserDetailsServiceUnitTest
 	public void testLoadUserByUsernameWithValidUsernameReturnsUser()
 	{
 		String email = "noreply@noreply.com";
-		User user = new User(email, "password");
+		User user = new User(email, "password", User.ACTIVATION_TOKEN_APPROVED,
+			Collections.emptyList());
 		when(userRepository.findOneByEmailAddress(email)).thenReturn(Optional.of(user));
 
 		CurrentUser expectedCurrentUser = new CurrentUser(user);

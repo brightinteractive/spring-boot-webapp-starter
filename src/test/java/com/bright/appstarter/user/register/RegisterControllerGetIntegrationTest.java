@@ -1,14 +1,16 @@
-package com.bright.appstarter.user;
+package com.bright.appstarter.user.register;
 
-import static com.bright.appstarter.user.UserUITestConstants.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 
 import javax.inject.Inject;
 
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -18,42 +20,42 @@ import org.junit.runner.RunWith;
 
 import com.bright.appstarter.test.AppStarterIntegrationTest;
 import com.bright.appstarter.testsecurity.AuthenticationSetter;
-import com.bright.appstarter.testsecurity.SecurityMockMvcWrapper;
+import com.bright.appstarter.user.UserUITestConstants;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @AppStarterIntegrationTest
 @WebAppConfiguration
 @Transactional
-public class ChangePasswordControllerGetIntegrationTest
+public class RegisterControllerGetIntegrationTest
 {
 	@Inject
 	private WebApplicationContext webApplicationContext;
 
-	@Inject
-	private UserService userService;
-
-	private SecurityMockMvcWrapper mockMvc;
+	private MockMvc mockMvc;
 
 	private AuthenticationSetter authenticationSetter = new AuthenticationSetter();
 
 	@Before
 	public void setUp()
 	{
+		mockMvc = webAppContextSetup(webApplicationContext)
+			.build();
 		authenticationSetter.setFullyAuthenticatedUser();
-		mockMvc = new SecurityMockMvcWrapper(webApplicationContext);
 	}
 
 	@Test
-	public void testGetDoesNotThrow() throws Exception
+	public void testGetShowsRegisterPage() throws Exception
 	{
-		String emailAddress = "any@any.com";
-		User user = userService.createUser(emailAddress, "apassword");
 
-		final MockHttpServletRequestBuilder get = get(CHANGE_PASSWORD_URL)
-			.param("userId", user.getId().toString());
+		final MockHttpServletRequestBuilder get =
+						MockMvcRequestBuilders
+							.get(UserUITestConstants.REGISTER_URL);
 
 		mockMvc.perform(get)
 			.andExpect(status().isOk())
-			.andExpect(view().name(CHANGE_PASSWORD_TEMPLATE));
+			.andExpect(view().name(UserUITestConstants.REGISTER_TEMPLATE))
+			.andExpect(content().string(
+				containsString("Register")));
 	}
+
 }

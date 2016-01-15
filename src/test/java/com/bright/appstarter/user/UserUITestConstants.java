@@ -11,4 +11,8 @@ public class UserUITestConstants
 	public static final String CHANGE_PASSWORD_URL = "/user/change-password";
 	public static final String CHANGE_PASSWORD_TEMPLATE = "content/user/change-password";
 
+	public static final String REGISTER_URL = "/register";
+	public static final String REGISTER_TEMPLATE = "content/user/register";
+	public static final String POST_REGISTER_URL = "/";
+
 }

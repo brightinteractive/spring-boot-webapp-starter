@@ -23,12 +23,15 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 // 'user' is a reserved word in most DBs
 public class User
 {
+	public final static String ACTIVATION_TOKEN_APPROVED = "1";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Column(unique = true)
 	private String emailAddress;
+	private String activationToken;
 	private String passwordHash;
 
 	@ElementCollection
@@ -70,6 +73,17 @@ public class User
 		this.id = id;
 		this.passwordHash = passwordHash;
 		this.emailAddress = emailAddress;
+		this.roles = roles;
+	}
+
+	public User(String emailAddress,
+		String passwordHash,
+		String registerToken,
+		Collection<Role> roles)
+	{
+		this.passwordHash = passwordHash;
+		this.emailAddress = emailAddress;
+		this.activationToken = registerToken;
 		this.roles = roles;
 	}
 
@@ -117,6 +131,16 @@ public class User
 		this.roles = roles;
 	}
 
+	public String getActivationToken()
+	{
+		return activationToken;
+	}
+
+	public void setActivationToken(String activationToken)
+	{
+		this.activationToken = activationToken;
+	}
+
 	@Override
 	public int hashCode()
 	{
@@ -153,6 +177,7 @@ public class User
 			.append(id)
 			.append(emailAddress)
 			.append(roles)
+			.append(activationToken)
 			.toString();
 	}
 }
