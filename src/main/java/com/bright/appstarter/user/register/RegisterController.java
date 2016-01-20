@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bright.appstarter.user.UserService.UserAlreadyExistsException;
 
-@RequestMapping(REGISTER_URL)
 @Controller
 public class RegisterController
 {
-	private static final String TEMPLATE = "content/user/register";
+	private static final String TEMPLATE_REGISTER = "content/user/register";
+	private static final String TEMPLATE_REGISTER_SUCCESS = "content/user/register-success";
 
 	@Inject
 	private RegisterService registerService;
@@ -34,15 +34,15 @@ public class RegisterController
 		binder.addValidators(registerFormValidator);
 	}
 
-	@RequestMapping(method = GET)
+	@RequestMapping(value = REGISTER_URL, method = GET)
 	public String get(Model model)
 	{
 		final RegisterForm form = new RegisterForm();
 		model.addAttribute("form", form);
-		return TEMPLATE;
+		return TEMPLATE_REGISTER;
 	}
 
-	@RequestMapping(method = POST)
+	@RequestMapping(value = REGISTER_URL, method = POST)
 	public String post(
 		@Valid @ModelAttribute("form") RegisterForm form,
 		BindingResult result,
@@ -50,11 +50,16 @@ public class RegisterController
 	{
 		if (result.hasErrors())
 		{
-			return TEMPLATE;
+			return TEMPLATE_REGISTER;
 		}
 
 		registerService.register(form.getEmailAddress(), form.getPassword());
-		return "redirect:/";
+		return "redirect:" + REGISTER_SUCCESS_URL;
 	}
 
+	@RequestMapping(value = REGISTER_SUCCESS_URL, method = GET)
+	public String getSuccess()
+	{
+		return TEMPLATE_REGISTER_SUCCESS;
+	}
 }

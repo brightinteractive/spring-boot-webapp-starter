@@ -70,6 +70,8 @@ public class RegisterControllerPostIntegrationTest
 		Optional<User> checkNotExisting = userService.getUserByEmailAddress(emailAddress);
 		assertFalse(checkNotExisting.isPresent());
 
+		authenticationSetter.setFullyAuthenticatedUser();
+
 		final MockHttpServletRequestBuilder post =
 						MockMvcRequestBuilders
 							.post(UserUITestConstants.REGISTER_URL)
