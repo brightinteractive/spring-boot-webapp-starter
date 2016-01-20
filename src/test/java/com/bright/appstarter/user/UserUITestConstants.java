@@ -15,4 +15,6 @@ public class UserUITestConstants
 	public static final String REGISTER_TEMPLATE = "content/user/register";
 	public static final String POST_REGISTER_URL = "/";
 
+	public static final String ACTIVATE_URL = "/activate";
+	public static final String ACTIVATE_TEMPLATE = "content/user/activate-result";
 }

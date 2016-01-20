@@ -45,7 +45,7 @@ public class UserService
 		return createUser(emailAddress, password, Collections.emptyList());
 	}
 
-	@PreAuthorize("@userPermissionsService.canAddOrEditUsers(principal)")
+	@PreAuthorize("@userPermissionsService.allowPublicAccess()")
 	public User createUser(String emailAddress,
 		String password,
 		String registerToken) throws UserAlreadyExistsException

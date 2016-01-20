@@ -6,6 +6,10 @@ import com.bright.appstarter.userlogin.CurrentUser;
 @AppStarterService
 public class UserPermissionsService
 {
+	public boolean allowPublicAccess()
+	{
+		return true;
+	}
 
 	public boolean canViewAllUsers(CurrentUser currentUser)
 	{

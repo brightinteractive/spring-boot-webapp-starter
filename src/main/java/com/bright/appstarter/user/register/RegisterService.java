@@ -7,6 +7,9 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.bright.appstarter.email.EmailService;
 import com.bright.appstarter.email.EmailVariablesImpl;
 import com.bright.appstarter.stereotype.AppStarterService;
@@ -31,7 +34,9 @@ public class RegisterService
 	@Value("${appstarter.application.url}")
 	private String applicationUrl;
 
-	@PreAuthorize("true")
+	protected final Log logger = LogFactory.getLog(getClass());
+
+	@PreAuthorize("@userPermissionsService.allowPublicAccess()")
 	// public access allowed
 	public User register(String emailAddress, String password) throws UserAlreadyExistsException
 	{
@@ -44,10 +49,10 @@ public class RegisterService
 
 	@PreAuthorize("true")
 	// public access allowed
-	public User activate(String registerToken)
+	public User activate(String activationToken)
 	{
 
-		User registeredUser = this.userRepository.findOneByActivationToken(registerToken);
+		User registeredUser = this.userRepository.findOneByActivationToken(activationToken);
 		if (registeredUser != null)
 		{
 			registeredUser.setActivationToken(User.ACTIVATION_TOKEN_APPROVED);
@@ -68,7 +73,16 @@ public class RegisterService
 		EmailVariablesImpl variables = new EmailVariablesImpl();
 		variables.addBodyVar("activationUrl",
 			applicationUrl + "/" + UserUrlConstants.ACTIVATE_URL + "/" + user.getActivationToken());
-		emailService.send(user.getEmailAddress(), "activation", variables);
+
+		try
+		{
+			emailService.send(user.getEmailAddress(), "activation", variables);
+		}
+		catch (Throwable t)
+		{
+			logger
+				.error("Failed to send registration email to " + user.getEmailAddress() + ":" + t);
+		}
 	}
 
 	public static class InvalidRegisterTokenException extends RuntimeException
